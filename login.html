@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #gallery { display: flex; flex-wrap: wrap; margin-top: 20px; }
+        .image-container { margin: 10px; }
+        img { max-width: 150px; max-height: 150px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Image Gallery</h1>
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="addImage()">Add Image</button>
+
+    <div id="gallery"></div>
+
+    <script>
+        function addImage() {
+            const imageInput = document.getElementById('imageInput');
+            const gallery = document.getElementById('gallery');
+
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    const container = document.createElement('div');
+                    container.className = 'image-container';
+                    container.appendChild(img);
+                    gallery.appendChild(container);
+                }
+                reader.readAsDataURL(imageInput.files[0]);
+                imageInput.value = ''; // Clear the input
+            }
+        }
+    </script>
+</body>
+</html>
